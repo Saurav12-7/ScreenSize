@@ -1,25 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { useEffect, useState } from 'react';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [WindowSize,setWindowSize]=useState({
+    width:window.innerWidth,
+    height:window.innerHeight
+  });
+
+  useEffect(()=>{
+    let handleResize=()=>{
+      setWindowSize({
+        width:window.innerWidth,
+        height:window.innerHeight
+      })
+    }
+    window.addEventListener('resize',handleResize);
+    return()=>{
+
+      window.removeEventListener('resize',handleResize)
+    }
+  },[WindowSize])
+  return(
+    <div className='App'>
+      <h1>Window Size</h1>
+      <p>Width:{WindowSize.width}</p>
+      <p>Height:{WindowSize.height}</p>
     </div>
-  );
+  )
 }
 
 export default App;
